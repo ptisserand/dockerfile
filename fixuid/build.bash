@@ -1,8 +1,12 @@
 #!/bin/bash -ex
 
 UBUNTU_VERSION=$1
-sed "s|@UBUNTU_VERSION@|${UBUNTU_VERSION}|g" Dockerfile.in > Dockerfile
+NAME=$2
 
-docker build -t softnautic/ubuntu-fixuid:${UBUNTU_VERSION} .
+sed -e "s|@UBUNTU_VERSION@|${UBUNTU_VERSION}|g" \
+	-e "s|@USER@|${NAME}|g" \
+	-e "s|@GROUP@|${NAME}|g" Dockerfile.in > Dockerfile
+
+DOCKER_BUILDKIT=1 docker build -t ${NAME}/ubuntu-fixuid:${UBUNTU_VERSION} .
 
 

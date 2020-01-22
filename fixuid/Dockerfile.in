@@ -6,15 +6,15 @@ WORKDIR /src
 RUN git clone https://github.com/boxboat/fixuid 
 
 WORKDIR /src/fixuid
-RUN git checkout -b work e4c4a04f89b0ba0d951b1fea961291f760c4275c
+RUN git checkout -b work 0ec93d22e52bde5b7326e84cb62fd26a3d20cead
 RUN ./build.sh
 
 ############
 FROM ubuntu:@UBUNTU_VERSION@
 
-ARG USER=softnautic
+ARG USER=@USER@
 ARG USER_ID=1000
-ARG GROUP=softnautic
+ARG GROUP=@GROUP@
 ARG GROUP_ID=1000
 ENV FIXUID=/usr/local/bin/fixuid
 
