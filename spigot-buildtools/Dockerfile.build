@@ -1,0 +1,21 @@
+FROM ubuntu:18.04
+LABEL maintainer="Patrice Tisserand <p.tisserand@gmail.com>"
+
+RUN apt-get update && \
+    apt-get install -y curl git openjdk-8-jdk-headless && \
+    apt-get clean
+
+RUN useradd -m minecraft
+
+
+WORKDIR /build
+RUN mkdir /output && \
+    chown minecraft /build /output
+
+ARG BUILD_NUMBER=120
+ENV BUILD_NUMBER=${BUILD_NUMBER}
+ENV BUILD_URL=https://hub.spigotmc.org/jenkins/job/BuildTools/${BUILD_NUMBER}/artifact/target/BuildTools.jar
+
+USER minecraft
+RUN curl --output /build/BuildTools.jar ${BUILD_URL}
+ENTRYPOINT ["java", "-jar", "/build/BuildTools.jar", "--output-dir", "/output"]
