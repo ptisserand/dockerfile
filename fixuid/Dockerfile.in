@@ -1,4 +1,4 @@
-FROM golang:1.11-alpine3.8 as builder
+FROM golang:1.16-alpine3.15 as builder
 
 RUN apk add --no-cache git
 
@@ -6,7 +6,7 @@ WORKDIR /src
 RUN git clone https://github.com/boxboat/fixuid 
 
 WORKDIR /src/fixuid
-RUN git checkout -b work 0ec93d22e52bde5b7326e84cb62fd26a3d20cead
+RUN git checkout -b work v0.5.1
 RUN ./build.sh
 
 ############
